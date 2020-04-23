@@ -9,42 +9,66 @@
  * "abc" & "cba" => true
  */
 
-function areIso(str1,str2) {
-  if (str1.length !== str2.length) return false; // O(1)
-  if (str1 === "" || str2 === "") return false; // O(1)
+// function areIso(str1,str2) {
+//   if (str1.length !== str2.length) return false; // O(1)
+//   if (str1 === "" || str2 === "") return false; // O(1)
 
-  let arr1 = buildArr(str1); // O(n)
-  let arr2 = buildArr(str2); // O(n)
+//   let arr1 = buildArr(str1); // O(n)
+//   let arr2 = buildArr(str2); // O(n)
 
-  return compareArrs(); // O(n)
+//   return compareArrs(); // O(n)
 
-  function buildArr(str) {
-    let hash = {};
-    for (let i = 0; i < str.length; i++){
-      if(hash[str[i]] === undefined) {
-        hash[str[i]] = [i];
-      } else {
-        hash[str[i]].push(i);
-      }
+//   function buildArr(str) {
+//     let hash = {};
+//     for (let i = 0; i < str.length; i++){
+//       if(hash[str[i]] === undefined) {
+//         hash[str[i]] = [i];
+//       } else {
+//         hash[str[i]].push(i);
+//       }
+//     }
+//     return Object.values(hash);
+//     // {t:[0,2],i:[1],l:[3],e:[4]} => [[0,2],[1],[3],[4]]
+//   }
+
+//   function compareArrs () {
+//     if (arr1.length !== arr2.length) return false;
+//     for (let i = 0; i < arr1.length; i++) {
+//       for (let idx = 0; idx < arr1[i].length; idx++) {
+//         if (arr1[i][idx] !== arr2[i][idx]) return false;
+//       }
+//     }
+//     return true;
+//   }
+// }
+/**
+ * What is n? Length of the strs
+ * Time Complexity: O(n) - iterate through each char
+ * Space Complexity: O(n) - initialize hashes and arrays
+ */
+
+function areIso(str1, str2) {
+  if (str1.length !== str2.length) return false;
+
+  let hash = {};
+  for (let i = 0; i < str1.length; i++) {
+    let char1 = str1[i];
+    let char2 = str2[i];
+    if (hash[char1] === undefined) {
+      if(Object.values(hash).indexOf(char2) > -1) return false;
+      hash[char1] = char2;
+    } else if (hash[char1] !== char2) {
+      return false;
     }
-    return Object.values(hash);
-    // {t:[0,2],i:[1],l:[3],e:[4]} => [[0,2],[1],[3],[4]]
   }
-
-  function compareArrs () {
-    if (arr1.length !== arr2.length) return false;
-    for (let i = 0; i < arr1.length; i++) {
-      for (let idx = 0; idx < arr1[i].length; idx++) {
-        if (arr1[i][idx] !== arr2[i][idx]) return false;
-      }
-    }
-    return true;
-  }
+  return true;
 }
 
 console.log(areIso("add","egg")) // => true
+// {a: "e", d: "g"}
 console.log(areIso("title","cycle")) // => true
 console.log(areIso("book","ride")) // => false
+// {b: "r", o: "i"}
 console.log(areIso("abc","cba")) // => true
 
 /**

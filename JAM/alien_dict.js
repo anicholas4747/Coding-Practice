@@ -40,11 +40,17 @@ function alienDictionary (arr) {
     for (let i = 0; i < arr.length - 1; i++){
 
       // compare chars
-      if (arr[i][idx] !== arr[i+1][idx]) {
-        let node = new GraphNode(arr[i + 1][idx]);
-        head.children.push(node);
-        head = node;
+      if (idx === 0 || (idx > 0 && arr[i].slice(0, idx) === arr[i + 1].slice(0, idx))) {
+        if (arr[i][idx] !== arr[i + 1][idx]) {
+          // check if exists
+          let node = new GraphNode(arr[i + 1][idx]);
+
+          //parent
+          head.children.push(node);
+          head = node;
+        }
       }
+      
     }
     generateGraph(arr,idx+1);
 

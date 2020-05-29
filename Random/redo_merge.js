@@ -6,7 +6,7 @@
 //Retain order of elements
 
 //Time Complexity: Less than Quadratic
-//Space Complexity: No additional memory aside from output
+//Space Complexity: Constant
 
 //[Start, End], exclusive of end
 //[5,8] => [5,7] remove index 5-7
@@ -22,7 +22,7 @@ function removeIntervals(nums, intervals) {
   organize("intervals"); // O(n)
   removeSpecificNums(); // O(m*n)
   organize("nums"); // O(m)
-  return nums;
+  return nums.slice(0,nums.indexOf(undefined));
 
   function mergeIntervals () {
     intervals.sort((a,b)=>(a[0]!==b[0]) ? a[0]-b[0] : a[1]-b[1]);
@@ -84,7 +84,8 @@ function removeIntervals(nums, intervals) {
     }
   }
 }
-
+//  idx  = [ 0, 1,  2, 3,  4,  5, 6,  7,  8,  9, 10, 11, 12, 13, 14, 15]
 let nums = [-8, 3, -5, 1, 51, 56, 0, -5, 29, 43, 78, 75, 32, 76, 73, 76];
 let intervals = [[5, 8], [10, 13], [3, 6], [20, 25]];
-console.log(removeIntervals(nums,intervals));
+console.log(removeIntervals(nums, intervals));
+// console.log(removeIntervals(nums, intervals).join("|") === [-8, 3, -5, 29, 43, 76, 73, 76].join("|"));
